@@ -1,0 +1,37 @@
+﻿@page "/CreateProduct"
+@inherits AdminCreateProductBase
+
+<EditForm Model="productViewModel" @onclick="AddProduct_Click">
+    <div class="mb-3">
+        <label class="form-label">Product Name</label>
+        <InputText class="form-control" @bind-Value="@productViewModel.Name"/>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Product Description</label>
+        <InputText class="form-control" @bind-Value="@productViewModel.Description"/>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Product Image</label>
+        <InputText class="form-control" @bind-Value="@productViewModel.ImageURL"/>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Product Price</label>
+        <InputNumber class="form-control" @bind-Value="@productViewModel.Price"/>
+    </div>
+   <div class="mb-3">
+        <label class="form-label">Product QTY</label>
+        <InputNumber class="form-control" @bind-Value="@productViewModel.Qty"/>
+    </div>
+   
+    <div class="mb-3">
+        <label class="form-label">Product Category</label>
+        <InputSelect @bind-Value="@productViewModel.CategoryId">
+            @foreach (var category in Categories) 
+            {
+                <option value="@category.CategoryId">@category.CategoryName</option>
+            }
+        </InputSelect>
+    </div>
+    <button class="btn btn-primary btn-sm" type="submit">Submit</button>
+    
+</EditForm>

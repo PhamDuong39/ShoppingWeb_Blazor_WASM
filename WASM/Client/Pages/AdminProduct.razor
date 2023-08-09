@@ -1,0 +1,28 @@
+﻿@page "/ManageProduct"
+@using Microsoft.AspNetCore.Authorization;
+@inherits AdminProductBase
+@attribute [Authorize(Roles = "Admin")]
+
+<a href="/CreateProduct">Create</a>
+@if (Products == null)
+{
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+}
+else
+{
+    <div class="row">
+        @foreach (var item in Products)
+        {
+            <div class="card" style="width: 18rem;">
+                <img src="@item.ImageURL" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Name</h5>
+
+                    <a href="" class="btn btn-primary">View</a>
+                </div>
+            </div>
+        }
+    </div>
+}

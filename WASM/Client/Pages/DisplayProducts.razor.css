@@ -1,0 +1,22 @@
+﻿a {
+    text-decoration: none !important;
+}
+
+    a:hover .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+        transition: box-shadow 0.3s ease-in-out !important;
+    }
+
+.card {
+    transition: box-shadow 0.3s ease-in-out !important;
+    overflow: hidden !important;
+}
+
+a:hover img {
+    transform: scale(1.07) !important;
+    transition: 0.5s ease-in-out !important;
+}
+
+img {
+    transition: 0.5s ease-in-out !important;
+}

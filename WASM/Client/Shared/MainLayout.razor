@@ -1,0 +1,34 @@
+﻿@inject AuthenticationStateProvider AuthenticationStateProvider
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims;
+@inherits LayoutComponentBase
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <AuthorizeView>
+                <Authorized>
+                    <CartMenu />
+                    Hello, @context.User.FindFirst(ClaimTypes.Role).Value - @context.User.FindFirst(ClaimTypes.NameIdentifier).Value
+                    - @context.User.FindFirstValue("Id")
+                    <a class="btn btn-danger btn-sm" href="/Logout">Logout</a>
+                    
+                </Authorized>
+                <NotAuthorized>
+                    <a href="/Login">Login</a>
+                </NotAuthorized>
+            </AuthorizeView>
+            <AuthorizeView Roles="Admin">
+                <a class="btn btn-info btn-sm" href="/ManageProduct">Manage Product</a>
+            </AuthorizeView>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>

@@ -1,0 +1,25 @@
+﻿@page "/login"
+@using Microsoft.AspNetCore.Authorization
+@inherits LoginBase
+@attribute [AllowAnonymous]
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Please enter your details</h5>
+        <EditForm Model="loginViewModel" OnValidSubmit="SubmitFormLogin_Click">
+            <DataAnnotationsValidator/>
+            <ValidationSummary />
+            <div class="form-group">
+                <label for="username">Username</label>
+                <InputText Id="username" Class="form-control" @bind-Value="loginViewModel.Username" />
+                <ValidationMessage For="@(() => loginViewModel.Username)" />
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <InputText Id="password" type="password" Class="form-control" @bind-Value="loginViewModel.Password" />
+                <ValidationMessage For="@(() => loginViewModel.Password)" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </EditForm>
+    </div>
+</div>

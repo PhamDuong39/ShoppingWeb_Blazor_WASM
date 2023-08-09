@@ -1,0 +1,78 @@
+﻿@page "/ShoppingCart"
+@inherits ShoppingCartBase
+@using Microsoft.AspNetCore.Authorization;
+@using Microsoft.AspNetCore.Components.Authorization
+@attribute [Authorize(Roles = "Admin, User")]
+
+@if(CartVMItems == null) {
+    <h3>Loading....</h3>
+}
+else {
+    <AuthorizeView>
+        <NotAuthorized>
+            <span>Please Login</span>
+        </NotAuthorized>
+        <Authorized>
+            @if(CartVMItems.Count() == 0)
+            {
+                <h4>There are currently no items in the cart</h4>
+            }
+            else
+            {
+                <h3 class="mb-5">Cart</h3>
+                <div class="row mb-5">
+                    <div class="col-md-9">
+                        @foreach(var item in CartVMItems)
+                        {
+                            <div class="row mb-4">
+                                <div class="col-md-4">
+                                    <img src="@item.ProductImageURL" width="300" class="img-thumbnail">
+                                </div>
+                                <div class="col-md-8">
+                                    <h5>@item.ProductName</h5>
+                                     <h5>@item.Id</h5>
+                                    <div class="mb-4">
+                                        @item.ProductDescription
+                                    </div>
+                                    <span>
+                                        Price : <b>@item.Price.ToString("C")</b>
+                                        <input type="number" @bind="@item.Qty">
+                                        <button class="btn btn-info btn-sm"
+                                            @onclick="() => UpdateQtyCartItem_Click(
+                                                new WASM.Shared.ViewModels.CartViewModel{
+                                                    Id = item.Id,
+                                                    CartId = FakeUserLogin.CartId,
+                                                    ProductId = item.ProductId,
+                                                    ProductName = item.ProductName,
+                                                    ProductDescription = item.ProductDescription,
+                                                    ProductImageURL = item.ProductImageURL,
+                                                    Price = item.Price,
+                                                    Qty = item.Qty,
+                                                }
+                                            )"
+                                        >Update Quantity</button>
+                                    </span>
+                                    <div>
+                                        <button @onclick="() => DeleteCartItem_Click(item.Id)" class="btn btn-danger sm">Remove</button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Cart Summary</h5>
+                        <div class="mt-2">
+                            <div>
+                                Total - (@TotalQuantity items)&nbsp;
+                                <b>@TotalPrice</b>
+                            </div>
+                            <a href="#" class="btn btn-success">
+                                <span class="oi oi-credit-card"></span> Proceed to Checkout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </Authorized>
+    </AuthorizeView>
+}

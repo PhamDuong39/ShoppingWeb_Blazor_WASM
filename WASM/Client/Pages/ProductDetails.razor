@@ -1,0 +1,39 @@
+﻿@page "/ProductDetails/{Id:int}"
+@inherits ProductDetailsBase
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims;
+
+@if(Product == null)
+{
+    <h3>Loading Product Detail .......</h3>
+}
+else
+{
+    <h3 class="mb-5">Product Details</h3>
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <img class="img-fluid" src="@Product.ImageURL">
+        </div>
+        <div class="col-md-6">
+            <h3>@Product.Name</h3>
+            <p class="mb-4">@Product.Description</p>
+            <p class="mb-4">
+                <b>@Product.Price.ToString("C")&nbsp;(@Product.Qty items in stock)</b>
+                <button class="btn btn-success"
+                    @onclick = "() => AddToCart_Click(new WASM.Shared.ViewModels.CartViewModel {
+                        CartId = FakeUserLogin.CartId,
+                        ProductId = Product.ProductId,
+                        ProductName = Product.Name,
+                        ProductDescription = Product.Description,
+                        ProductImageURL = Product.ImageURL,
+                        Price = Product.Price,
+                        Qty = 1,
+                    })"
+                    ><b>Add to Cart</b>
+                </button>
+            </p>
+        </div>
+    </div>
+}
